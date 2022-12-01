@@ -1,11 +1,11 @@
 import React, {useState, useContext} from 'react'
-import './uploader.scss'
+import './blur.scss'
 import axios from "axios"
 import { useEffect } from 'react'
 import { LoadingContext } from '../../App'
-import {BsImage} from "react-icons/bs"
 import {BsCloudDownloadFill} from "react-icons/bs"
-import Blur from './Blur/Blur'
+import ImagesPreview from '../ImagesPreview/ImagesPreview'
+import FileBrowser from '../FileBrowser/FileBrowser'
 
 
 const Uploader = () => {
@@ -13,8 +13,9 @@ const Uploader = () => {
   const [imageFile, setimageFile] = useState(undefined)
   const [imageBase64, setImageBase64] = useState("")
   const [outputImage, setOutputImage] = useState("")
-
+  const [blurValue, setBlurValue] = useState("10")
   const {setIsLoading, isLoading} = useContext(LoadingContext)
+
 
   useEffect(()=>{
     if (imageFile){
@@ -59,18 +60,14 @@ const Uploader = () => {
   }
   return (
     <div className='uploader__section' style={{filter : isLoading ? "blur(8px)" : ""}}>
-
-        <div className='images__container'>
-          {imageBase64 ? <img src={imageBase64}/> : <div>Select Image</div>}
-          {outputImage ? <img src={outputImage}/> : null}
-        </div>
-        <label className='custom__file__upload'>
-          <input type="file" accept='image/*' onChange={(e) => setimageFile(e.target.files[0])}/>
-          <BsImage /> Browse...
-        </label>
+        <h2><span>Blur</span> Tool</h2>
+        <ImagesPreview imageBase64 = {imageBase64} outputImage = {outputImage} />
+        <FileBrowser setimageFile = {setimageFile} />
         {outputImage ? <a href={outputImage} download={"edt_"+imageFile["name"]}><BsCloudDownloadFill/> Dowload</a> : null}
-        
-        <Blur imageBase64= { imageBase64 } setOutputImage={setOutputImage} imageFile={imageFile} />
+        <label className='blur__value__label'>
+          <input type="range" min="1" max="50" step="1" defaultValue="10" onChange={(e)=> setBlurValue(e.target.value)}/><span>{blurValue}</span>
+        </label>
+        <button onClick={uploadImage} disabled={imageFile ? false : true} >Upload</button>
         
     </div>
   )

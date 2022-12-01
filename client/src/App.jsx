@@ -4,7 +4,7 @@ import './App.scss'
 import Hero from './Components/Hero/Hero'
 import Loading from './Components/Loading/Loading'
 import Navbar from './Components/Navbar/Navbar'
-import Uploader from './Components/Uploader/Uploader'
+import Uploader from './Components/Blur/Blur'
 
 const LoadingContext = createContext(null)
 function App() {
