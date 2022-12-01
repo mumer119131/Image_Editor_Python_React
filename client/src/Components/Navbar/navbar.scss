@@ -1,0 +1,24 @@
+@use '../../variables' as *;
+nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    h2{
+        color: $colorPrimaryVariant;
+    }
+    ul{
+        display: flex;
+        list-style: none;
+        gap: 1.5rem;
+        li{
+            color: $colorSecondry;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: $transition;
+        }
+        li:hover{
+            letter-spacing: 2px;
+            text-decoration: underline;
+        }
+    }
+}
