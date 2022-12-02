@@ -10,13 +10,14 @@ nav{
         display: flex;
         list-style: none;
         gap: 1.5rem;
-        li{
+        a{
             color: $colorSecondry;
             letter-spacing: 1px;
             cursor: pointer;
             transition: $transition;
+            text-decoration: none;
         }
-        li:hover{
+        a:hover{
             letter-spacing: 2px;
             text-decoration: underline;
         }

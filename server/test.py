@@ -2253,27 +2253,38 @@ string_lines  = """ 2494
                     1121
 
 """
-splited_input = string_lines.split("\n")
+# splited_input = string_lines.split("\n")
 
-input_list = []
+# input_list = []
 
-sub_list = []
-for item in splited_input:
-    if item == "":
-        input_list.append(sub_list)
-        sub_list = []
-    else:
-        sub_list.append(int(item.strip()))
+# sub_list = []
+# for item in splited_input:
+#     if item == "":
+#         input_list.append(sub_list)
+#         sub_list = []
+#     else:
+#         sub_list.append(int(item.strip()))
 
-max_calories = []
-for item in input_list:
-    max_calories.append(sum(item))
+# max_calories = []
+# for item in input_list:
+#     max_calories.append(sum(item))
 
-sorted_calories = sorted(max_calories)
+# sorted_calories = sorted(max_calories)
 
-print(sorted_calories)
+# print(sorted_calories)
 
-print(sorted_calories[-1])
+# print(sorted_calories[-1])
 
-print(sorted_calories[-1] , sorted_calories[- 2] , sorted_calories[- 3])
-print(sorted_calories[-1] + sorted_calories[- 2] + sorted_calories[- 3])
+# print(sorted_calories[-1] , sorted_calories[- 2] , sorted_calories[- 3])
+# print(sorted_calories[-1] + sorted_calories[- 2] + sorted_calories[- 3])
+
+win_conditions = [['A','Y'],['C','X'],['B','Z']]
+
+
+score = 0
+with open("input.txt", "r+") as inputFile:
+    for match in inputFile:
+        opponent, elve = match.split(" ")
+        elve = elve.strip()
+        
+    
