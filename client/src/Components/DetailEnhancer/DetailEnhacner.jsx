@@ -6,13 +6,12 @@ import ImagesPreview from '../ImagesPreview/ImagesPreview'
 import DownloadBtn from '../DownloadBtn/DownloadBtn'
 
 
-const ReduceSize = () => {
-
+const DetailEnhancer = () => {
     const [imageFile, setimageFile] = useState(undefined)
     const [imageBase64, setImageBase64] = useState("")
     const [outputImage, setOutputImage] = useState("")  
     const {setIsLoading, isLoading} = useContext(LoadingContext)
-    const [reduceFactor, setReduceFactor] = useState(10)
+ 
     useEffect(()=>{
         if (imageFile){
           setOutputImage(undefined)
@@ -48,8 +47,7 @@ const ReduceSize = () => {
             const response = await axios.post("http://127.0.0.1:5000", {
                 "base64" : imageBase64,
                 "imageType" : imageFile["type"],
-                "reduceFactor" : reduceFactor,
-                "editFunction" : "reducer"
+                "editFunction" : "detail"
             })
             setIsLoading(false)
             setOutputImage(response["data"])
@@ -57,17 +55,14 @@ const ReduceSize = () => {
       }
   return (
     <div className='uploader__section' style={{filter : isLoading ? "blur(8px)" : ""}}>
-        <h2><span>Reduce Image Size</span> Tool</h2>
+        <h2><span>Detail Enhancer </span> Tool</h2>
         <ImagesPreview imageBase64 = {imageBase64} outputImage = {outputImage} />
         <FileBrowser setimageFile = {setimageFile} />
         {outputImage ? <DownloadBtn outputImage={outputImage} fileName={imageFile["name"]}/> : null}
 
-        <label className='range__value__label'>
-          <input type="range" min="1" max="20" step="1" defaultValue="5" onChange={(e)=> setReduceFactor(e.target.value)}/><span>{reduceFactor}</span>
-        </label>
         <button onClick={uploadImage} disabled={imageFile ? false : true} >Upload</button>
     </div>
   )
 }
 
-export default ReduceSize
+export default DetailEnhancer

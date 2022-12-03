@@ -5,14 +5,13 @@ import FileBrowser from '../FileBrowser/FileBrowser'
 import ImagesPreview from '../ImagesPreview/ImagesPreview'
 import DownloadBtn from '../DownloadBtn/DownloadBtn'
 
-
-const ReduceSize = () => {
-
+const Rotate = () => {
     const [imageFile, setimageFile] = useState(undefined)
     const [imageBase64, setImageBase64] = useState("")
     const [outputImage, setOutputImage] = useState("")  
+    const [isExpandImage, setIsExpandImage] = useState(true)
     const {setIsLoading, isLoading} = useContext(LoadingContext)
-    const [reduceFactor, setReduceFactor] = useState(10)
+    const [rotateAngle, setRotateAngle] = useState(10)
     useEffect(()=>{
         if (imageFile){
           setOutputImage(undefined)
@@ -48,8 +47,9 @@ const ReduceSize = () => {
             const response = await axios.post("http://127.0.0.1:5000", {
                 "base64" : imageBase64,
                 "imageType" : imageFile["type"],
-                "reduceFactor" : reduceFactor,
-                "editFunction" : "reducer"
+                "rotateAngle" : rotateAngle,
+                "isExpandImage" : isExpandImage ? 1 : 0,
+                "editFunction" : "rotate",
             })
             setIsLoading(false)
             setOutputImage(response["data"])
@@ -57,17 +57,21 @@ const ReduceSize = () => {
       }
   return (
     <div className='uploader__section' style={{filter : isLoading ? "blur(8px)" : ""}}>
-        <h2><span>Reduce Image Size</span> Tool</h2>
+        <h2><span>Rotate</span> Tool</h2>
         <ImagesPreview imageBase64 = {imageBase64} outputImage = {outputImage} />
         <FileBrowser setimageFile = {setimageFile} />
         {outputImage ? <DownloadBtn outputImage={outputImage} fileName={imageFile["name"]}/> : null}
 
         <label className='range__value__label'>
-          <input type="range" min="1" max="20" step="1" defaultValue="5" onChange={(e)=> setReduceFactor(e.target.value)}/><span>{reduceFactor}</span>
+          <input type="range" min="1" max="360" step="1" defaultValue="90" onChange={(e)=> setRotateAngle(e.target.value)}/><span>{rotateAngle}°</span>
+        </label>
+        <label>
+            <input type="checkbox" defaultChecked onChange={(e)=> setIsExpandImage(!isExpandImage)}/>
+            Expand Image
         </label>
         <button onClick={uploadImage} disabled={imageFile ? false : true} >Upload</button>
     </div>
   )
 }
 
-export default ReduceSize
+export default Rotate

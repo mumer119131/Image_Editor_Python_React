@@ -15,75 +15,46 @@ def blurImage():
     imageBase64Dict = base64ToDict(request.data)
 
     #getting required data from the dict
-    blurValue = imageBase64Dict["blurValue"]
     imageType = imageBase64Dict["imageType"]
+    editFunction = imageBase64Dict['editFunction']
 
     # converting base64image into pillow image
     img, indexToStart = bytesToImage(imageBase64Dict["base64"])
 
-    # blur the image
-    blur_img = img.filter(ImageFilter.BoxBlur(int(blurValue)))
-    
-
+    #check what to edit into the image
+    if editFunction == "blur":
+        blurValue = imageBase64Dict["blurValue"]
+        output_img = img.filter(ImageFilter.BoxBlur(int(blurValue)))
+    elif editFunction == "embossing":
+        img_gray_smooth = img.filter(ImageFilter.SMOOTH)
+        output_img = img_gray_smooth.filter(ImageFilter.EMBOSS)
+    elif editFunction == "reducer" :
+        reduceFactor = imageBase64Dict["reduceFactor"]
+        output_img = img.reduce(int(reduceFactor))
+    elif editFunction == "grayScale" :
+        output_img = img.convert("L")
+    elif editFunction == "rotate":
+        rotateAngle = imageBase64Dict["rotateAngle"]
+        isExpandImage = imageBase64Dict["isExpandImage"]
+        output_img = img.rotate(int(rotateAngle), expand=bool(isExpandImage))
+    elif editFunction == "sharpen":
+        output_img = img.filter(ImageFilter.SHARPEN)
+    elif editFunction == "smooth":
+        output_img = img.filter(ImageFilter.SMOOTH_MORE)
+    elif editFunction == "detail":
+        output_img = img.filter(ImageFilter.DETAIL)
+    elif editFunction == "contour":
+        img = img.convert("L")
+        output_img = img.filter(ImageFilter.CONTOUR)
     # saving image in buffer to return it as a base64 image
     buffered = BytesIO()
-    blur_img.save(buffered, format=imageType.split("/")[1])
+    output_img.save(buffered, format=imageType.split("/")[1])
     img_str = base64.b64encode(buffered.getvalue())
 
     output_image = imageBase64Dict["base64"][0:indexToStart]+str(img_str)[2:-1]
 
     return output_image
 
-
-@app.route("/embossing", methods=['POST'])
-def embossingImage():
-    # parsing base64 data into a python readable dict
-    imageBase64Dict = base64ToDict(request.data)
-
-    #getting required data from the dict
-    imageType = imageBase64Dict["imageType"]
-
-    # converting base64image into pillow image
-    img, indexToStart = bytesToImage(imageBase64Dict["base64"])
-
-    # blur the image
-    img_gray_smooth = img.filter(ImageFilter.SMOOTH)
-    blur_img = img_gray_smooth.filter(ImageFilter.EMBOSS)
-    
-    # saving image in buffer to return it as a base64 image
-    buffered = BytesIO()
-    blur_img.save(buffered, format=imageType.split("/")[1])
-    img_str = base64.b64encode(buffered.getvalue())
-
-    output_image = imageBase64Dict["base64"][0:indexToStart]+str(img_str)[2:-1]
-
-    return output_image
-
-
-@app.route("/reduceSize", methods=['POST'])
-def reduceImage():
-    # parsing base64 data into a python readable dict
-    imageBase64Dict = base64ToDict(request.data)
-
-    #getting required data from the dict
-    reduceFactor = imageBase64Dict["reduceFactor"]
-    imageType = imageBase64Dict["imageType"]
-
-    # converting base64image into pillow image
-    img, indexToStart = bytesToImage(imageBase64Dict["base64"])
-
-    # blur the image
-    
-    reducedImage = img.reduce(int(reduceFactor))
-    
-    # saving image in buffer to return it as a base64 image
-    buffered = BytesIO()
-    reducedImage.save(buffered, format=imageType.split("/")[1])
-    img_str = base64.b64encode(buffered.getvalue())
-
-    output_image = imageBase64Dict["base64"][0:indexToStart]+str(img_str)[2:-1]
-
-    return output_image
 
 
 

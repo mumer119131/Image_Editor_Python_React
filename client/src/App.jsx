@@ -9,6 +9,12 @@ import {Routes, Route, BrowserRouter} from "react-router-dom"
 import Embossing from './Components/Embossing/Embossing'
 import Tools from './Components/Tools/Tools'
 import ReduceSize from './Components/ReduceSize/ReduceSize'
+import GrayScale from './Components/GrayScale/GrayScale'
+import Rotate from './Components/Rotate/Rotate'
+import Sharpen from './Components/Sharpen/Sharpen'
+import Smooth from './Components/Smooth/Smooth'
+import DetailEnhacner from './Components/DetailEnhancer/DetailEnhacner'
+import Sketch from './Components/Sketch/Sketch'
 const LoadingContext = createContext(null)
 function App() {
   const [isLoading, setIsLoading] = useState(false)
@@ -20,8 +26,8 @@ function App() {
           <Loading />
         </LoadingContext.Provider>
         <Navbar />
-        <Tools />
         <Hero />
+        <Tools />
       <Routes>
         <Route path='/' element={
               <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
@@ -30,6 +36,30 @@ function App() {
         <Route path='/reduceSize' element={
               <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
                 <ReduceSize />
+              </LoadingContext.Provider>} />
+        <Route path='/grayScale' element={
+              <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
+                <GrayScale />
+              </LoadingContext.Provider>} />
+        <Route path='/rotate' element={
+              <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
+                <Rotate />
+              </LoadingContext.Provider>} />
+        <Route path='/sharpen' element={
+              <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
+                <Sharpen />
+              </LoadingContext.Provider>} />
+        <Route path='/smooth' element={
+              <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
+                <Smooth />
+              </LoadingContext.Provider>} />
+        <Route path='/detailEnhancer' element={
+              <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
+                <DetailEnhacner />
+              </LoadingContext.Provider>} />
+        <Route path='/contour' element={
+              <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
+                <Sketch />
               </LoadingContext.Provider>} />
         <Route path='/embossing' element={
           <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>

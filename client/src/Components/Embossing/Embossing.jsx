@@ -43,9 +43,10 @@ const Embossing = () => {
   const uploadImage = async() =>{
     if (imageFile){
         setIsLoading(true)
-        const response = await axios.post("http://127.0.0.1:5000/embossing", {
+        const response = await axios.post("http://127.0.0.1:5000", {
             "base64" : imageBase64,
-            "imageType" : imageFile["type"]
+            "imageType" : imageFile["type"],
+            "editFunction" : "embossing"
         })
         setIsLoading(false)
         setOutputImage(response["data"])

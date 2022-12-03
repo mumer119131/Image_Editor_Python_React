@@ -8,11 +8,13 @@ const Tools = () => {
         <Link to={'/'}>Blur</Link>
         <Link to={'/embossing'}>Embossing</Link>
         <Link to={'/reduceSize'}>Reduce Size</Link>
+        <Link to={'/grayScale'}>GrayScale</Link>
+        <Link to={'/rotate'}>Rotate</Link>
+        <Link to={'/sharpen'}>Sharpen</Link>
+        <Link to={'/smooth'}>Smooth</Link>
+        <Link to={'/detailEnhancer'}>Detail Enhancer</Link>
+        <Link to={'/contour'}>Contour</Link>
         <Link>Edge Sharper</Link>
-        <Link>Contrast</Link>
-        <Link>Sharpen</Link>
-        <Link>Smooth</Link>
-        <Link>GrayScale</Link>
     </div>
   )
 }
