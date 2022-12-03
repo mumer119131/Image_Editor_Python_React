@@ -6,6 +6,7 @@ import { LoadingContext } from '../../App'
 import {BsCloudDownloadFill} from "react-icons/bs"
 import ImagesPreview from '../ImagesPreview/ImagesPreview'
 import FileBrowser from '../FileBrowser/FileBrowser'
+import DownloadBtn from '../DownloadBtn/DownloadBtn'
 
 
 const Uploader = () => {
@@ -63,7 +64,8 @@ const Uploader = () => {
         <h2><span>Blur</span> Tool</h2>
         <ImagesPreview imageBase64 = {imageBase64} outputImage = {outputImage} />
         <FileBrowser setimageFile = {setimageFile} />
-        {outputImage ? <a href={outputImage} download={"edt_"+imageFile["name"]}><BsCloudDownloadFill/> Dowload</a> : null}
+        {outputImage ? <DownloadBtn outputImage={outputImage} fileName={imageFile["name"]} /> : null}
+        
         <label className='blur__value__label'>
           <input type="range" min="1" max="50" step="1" defaultValue="10" onChange={(e)=> setBlurValue(e.target.value)}/><span>{blurValue}</span>
         </label>

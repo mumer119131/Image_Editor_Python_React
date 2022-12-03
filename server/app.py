@@ -60,6 +60,32 @@ def embossingImage():
     return output_image
 
 
+@app.route("/reduceSize", methods=['POST'])
+def reduceImage():
+    # parsing base64 data into a python readable dict
+    imageBase64Dict = base64ToDict(request.data)
+
+    #getting required data from the dict
+    reduceFactor = imageBase64Dict["reduceFactor"]
+    imageType = imageBase64Dict["imageType"]
+
+    # converting base64image into pillow image
+    img, indexToStart = bytesToImage(imageBase64Dict["base64"])
+
+    # blur the image
+    
+    reducedImage = img.reduce(int(reduceFactor))
+    
+    # saving image in buffer to return it as a base64 image
+    buffered = BytesIO()
+    reducedImage.save(buffered, format=imageType.split("/")[1])
+    img_str = base64.b64encode(buffered.getvalue())
+
+    output_image = imageBase64Dict["base64"][0:indexToStart]+str(img_str)[2:-1]
+
+    return output_image
+
+
 
 def base64ToDict(imageBase64):
     img_dict_str = imageBase64.decode("UTF-8")

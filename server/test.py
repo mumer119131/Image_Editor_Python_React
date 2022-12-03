@@ -2278,13 +2278,70 @@ string_lines  = """ 2494
 # print(sorted_calories[-1] , sorted_calories[- 2] , sorted_calories[- 3])
 # print(sorted_calories[-1] + sorted_calories[- 2] + sorted_calories[- 3])
 
-win_conditions = [['A','Y'],['C','X'],['B','Z']]
 
+
+
+# win_conditions = [['A','Y'],['C','X'],['B','Z']]
+# draw_conditions = [['A','X'], ['B', 'Y'], ['C', 'Z']]
+# shape_score = {
+#     'X' : 1,
+#     'Y' : 2,
+#     'Z' : 3
+# }
+
+# score = 0
+# with open("input.txt", "r+") as inputFile:
+#     for match in inputFile:
+#         opponent, elve = match.split(" ")
+#         elve = elve.strip()
+
+#         if [opponent, elve] in draw_conditions:
+#             score += 3
+#         elif [opponent, elve] in win_conditions:
+#             score += 6
+
+#         score += shape_score[elve]
+
+# print(score)
+
+
+
+# win_conditions = [['A','Y'],['C','X'],['B','Z']]
+# draw_conditions = [['A','X'], ['B', 'Y'], ['C', 'Z']]
+shape_score = {
+    'X' : 1,
+    'Y' : 2,
+    'Z' : 3
+}
+
+losing_conditions = {
+    'A' : 'Z',
+    'B' : 'X',
+    'C' : 'Y'
+}
+winning_conditions = {
+    'A' : 'Y',
+    'B' : 'Z',
+    'C' : 'X'
+}
+draw_conditions = {
+    'A' : 'X',
+    'B' : 'Y',
+    'C' : 'Z'
+}
 
 score = 0
 with open("input.txt", "r+") as inputFile:
     for match in inputFile:
         opponent, elve = match.split(" ")
         elve = elve.strip()
-        
-    
+
+        if elve == 'X': # We need to loose the match
+            score += shape_score[losing_conditions[opponent]]
+        elif elve == "Y": # We need to draw
+            score += 3
+            score += shape_score[draw_conditions[opponent]]
+        elif elve == 'Z':
+            score += 6
+            score += shape_score[winning_conditions[opponent]]
+print(score)
