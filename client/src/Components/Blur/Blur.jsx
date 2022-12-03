@@ -50,7 +50,7 @@ const Uploader = () => {
   const uploadImage = async() =>{
     if (imageFile){
       setIsLoading(true)
-      const response = await axios.post("http://127.0.0.1:5000", {
+      const response = await axios.post("https://imageedit-mumer119131.vercel.app", {
         "base64" : imageBase64,
         "blurValue" : blurValue,
         "imageType" : imageFile["type"],
