@@ -15,6 +15,7 @@ import Sharpen from './Components/Sharpen/Sharpen'
 import Smooth from './Components/Smooth/Smooth'
 import DetailEnhacner from './Components/DetailEnhancer/DetailEnhacner'
 import Sketch from './Components/Sketch/Sketch'
+import Composite from './Components/Composite/Composite'
 const LoadingContext = createContext(null)
 function App() {
   const [isLoading, setIsLoading] = useState(false)
@@ -57,9 +58,13 @@ function App() {
               <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
                 <DetailEnhacner />
               </LoadingContext.Provider>} />
-        <Route path='/contour' element={
+        <Route path='/sketch' element={
               <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
                 <Sketch />
+              </LoadingContext.Provider>} />
+        <Route path='/composite' element={
+              <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>
+                <Composite />
               </LoadingContext.Provider>} />
         <Route path='/embossing' element={
           <LoadingContext.Provider value={{"setIsLoading" : setIsLoading, "isLoading" : isLoading}}>

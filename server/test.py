@@ -1,4 +1,4 @@
-
+import string
 
 string_lines  = """ 2494
                     8013
@@ -2308,40 +2308,79 @@ string_lines  = """ 2494
 
 # win_conditions = [['A','Y'],['C','X'],['B','Z']]
 # draw_conditions = [['A','X'], ['B', 'Y'], ['C', 'Z']]
-shape_score = {
-    'X' : 1,
-    'Y' : 2,
-    'Z' : 3
-}
 
-losing_conditions = {
-    'A' : 'Z',
-    'B' : 'X',
-    'C' : 'Y'
-}
-winning_conditions = {
-    'A' : 'Y',
-    'B' : 'Z',
-    'C' : 'X'
-}
-draw_conditions = {
-    'A' : 'X',
-    'B' : 'Y',
-    'C' : 'Z'
-}
 
-score = 0
-with open("input.txt", "r+") as inputFile:
-    for match in inputFile:
-        opponent, elve = match.split(" ")
-        elve = elve.strip()
 
-        if elve == 'X': # We need to loose the match
-            score += shape_score[losing_conditions[opponent]]
-        elif elve == "Y": # We need to draw
-            score += 3
-            score += shape_score[draw_conditions[opponent]]
-        elif elve == 'Z':
-            score += 6
-            score += shape_score[winning_conditions[opponent]]
-print(score)
+# shape_score = {
+#     'X' : 1,
+#     'Y' : 2,
+#     'Z' : 3
+# }
+
+# losing_conditions = {
+#     'A' : 'Z',
+#     'B' : 'X',
+#     'C' : 'Y'
+# }
+# winning_conditions = {
+#     'A' : 'Y',
+#     'B' : 'Z',
+#     'C' : 'X'
+# }
+# draw_conditions = {
+#     'A' : 'X',
+#     'B' : 'Y',
+#     'C' : 'Z'
+# }
+
+# score = 0
+# with open("input.txt", "r+") as inputFile:
+#     for match in inputFile:
+#         opponent, elve = match.split(" ")
+#         elve = elve.strip()
+
+#         if elve == 'X': # We need to loose the match
+#             score += shape_score[losing_conditions[opponent]]
+#         elif elve == "Y": # We need to draw
+#             score += 3
+#             score += shape_score[draw_conditions[opponent]]
+#         elif elve == 'Z':
+#             score += 6
+#             score += shape_score[winning_conditions[opponent]]
+# print(score)
+
+prorities = string.ascii_lowercase + string.ascii_uppercase
+
+
+
+priorities_sum = 0
+# with open('input.txt', 'r+') as inputFile:
+#     for line in inputFile:
+#         line = line.strip()
+#         firstHalf = line[:len(line) //2]
+#         secondHalf = line[len(line) //2 :]
+        
+#         intersection_list = lst3 = [value for value in list(firstHalf) if value in list(secondHalf)]
+#         priorities_sum += prorities.index(intersection_list[0]) + 1
+
+# print(priorities_sum)
+
+with open('input.txt', 'r+') as inputFile:
+    line_c = 1
+
+    groups = []
+    lines_list = []
+    for line in inputFile:
+        line_c += 1
+        lines_list.append(line.strip())
+        if line_c == 4:
+            line_c = 1
+            groups.append(lines_list)
+            lines_list = []
+
+    
+for group in groups:
+
+    intersection = set(group[0]).intersection(group[1], group[2])
+    priorities_sum += prorities.index(list(intersection)[0]) + 1
+print(priorities_sum)
